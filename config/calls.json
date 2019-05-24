@@ -1,0 +1,66 @@
+[
+  {
+    "path": "/products/all",
+    "method": "GET",
+    "perform": "GetAllProducts"
+  },
+  {
+    "path": "/products/specific",
+    "method": "GET",
+    "required": {
+      "id": "uuid"
+    },
+    "perform": "GetSpecificProduct"
+  },
+  {
+    "path": "/categories/all",
+    "method": "GET",
+    "perform": "GetAllCategories"
+  },
+  {
+    "path": "/categories/specific",
+    "method": "GET",
+    "required": {
+      "name": "min:1"
+    },
+    "perform": "GetSpecificCategory"
+  },
+  {
+    "path": "/products/image",
+    "method": "GET",
+    "required": {
+      "id": "uuid",
+      "image": "integer|max:2"
+    },
+    "perform": "GetProductImage"
+  },
+  {
+    "path": "/auth/login",
+    "method": "POST",
+    "required": {
+      "username": "min:5|user_input",
+      "password": "min:5|user_input",
+      "captcha": "min:5"
+    },
+    "perform": "AuthLogin"
+  },
+  {
+    "path": "/auth/register",
+    "method": "POST",
+    "required": {
+      "username": "min:5|user_input",
+      "password": "min:5|user_input",
+      "email": "email",
+      "captcha": "min:5"
+    },
+    "perform": "AuthRegister"
+  },
+  {
+    "path": "/auth/logout",
+    "method": "POST",
+    "required": {
+      "uuid": "uuid"
+    },
+    "perform": "AuthLogout"
+  }
+]
