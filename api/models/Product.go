@@ -8,6 +8,6 @@ type Product struct {
 	Description string
 	UUID string
 	Price uint
-	Images []Image
+	Images string
 	Categories []*Category `gorm:"many2many:product_categories;"`
 }

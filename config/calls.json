@@ -59,8 +59,62 @@
     "path": "/auth/logout",
     "method": "POST",
     "required": {
-      "uuid": "uuid"
+      "id": "uuid"
     },
     "perform": "AuthLogout"
+  },
+  {
+    "path": "/products/delete",
+    "method": "POST",
+    "required": {
+      "id": "uuid"
+    },
+    "perform": "DeleteProduct"
+  },
+  {
+    "path": "/products/edit",
+    "method": "POST",
+    "required": {
+      "id": "uuid",
+      "name": "min:3",
+      "description": "min:3",
+      "price": "number"
+    },
+    "perform": "EditProduct"
+  },
+  {
+    "path": "/products/create",
+    "method": "POST",
+    "required": {
+      "name": "min:3",
+      "description": "min:3",
+      "price": "number"
+    },
+    "perform": "CreateProduct"
+  },
+  {
+    "path": "/categories/delete",
+    "method": "POST",
+    "required": {
+      "id": "uuid"
+    },
+    "perform": "DeleteCategory"
+  },
+  {
+    "path": "/categories/edit",
+    "method": "POST",
+    "required": {
+      "id": "uuid",
+      "name": "min:3"
+    },
+    "perform": "EditCategory"
+  },
+  {
+    "path": "/categories/create",
+    "method": "POST",
+    "required": {
+      "name": "min:3"
+    },
+    "perform": "CreateCategory"
   }
 ]
