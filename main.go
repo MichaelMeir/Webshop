@@ -2,6 +2,7 @@ package main
 
 import (
 	"io/ioutil"
+	"mime"
 	"net/http"
 	"strings"
 	"webshop/Env"
@@ -31,16 +32,20 @@ func main() {
 }
 
 func Handler(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	if strings.HasPrefix(req.URL.Path, env["API"]) {
 		req.URL.Path = strings.TrimPrefix(req.URL.Path, env["API"])
 		api.Handle(w, req)
 		return
+	}else if strings.HasPrefix(req.URL.Path, env["STATIC"]) {
+		w.Header().Set("Content-Type", mime.TypeByExtension(req.URL.Path))
+		_, err := w.Write([]byte(FileHandler.GetFile(env["ROOT"], req.URL.Path)))
+		if err != nil {
+			panic(err)
+		}
+		return
 	}
-	req.URL.Path = strings.TrimPrefix(req.URL.Path, "/")
-	if len(req.URL.Path) == 0 {
-		req.URL.Path = env["INDEX"]
-	}
-	_, err := w.Write([]byte(FileHandler.GetFile(env["ROOT"], req.URL.Path)))
+	_, err := w.Write([]byte(FileHandler.GetFile(env["ROOT"], env["INDEX"])))
 	if err != nil {
 		panic(err)
 	}

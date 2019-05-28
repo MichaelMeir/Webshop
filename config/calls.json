@@ -29,8 +29,7 @@
     "path": "/products/image",
     "method": "GET",
     "required": {
-      "id": "uuid",
-      "image": "integer|max:2"
+      "id": "uuid"
     },
     "perform": "GetProductImage"
   },
