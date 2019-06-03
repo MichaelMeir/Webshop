@@ -3,9 +3,7 @@
     <navbar/>
     <div class="flex flex-1 flex-wrap">
         <div v-for="(product, index) in products" :key="index" class="product my-2 h-32 border-b border-solid border-0 border-gray-200">
-            {{ product.Name }}
-            {{ GetImage(product.Images[0]) }}
-            <span class="text-gray-400">{{ product.Description }}</span>
+            <product-tile :product="product" :image_id="JSON.parse(product.Images)[0]"></product-tile>
         </div>
     </div>
   </div>
@@ -13,6 +11,7 @@
 
 <script>
 import Navbar from '@/components/objects/Navbar'
+import ProductTile from '@/components/objects/ProductTile'
 
 export default {
     name: 'Index',
@@ -30,13 +29,11 @@ export default {
     },
 
     methods: {
-        GetImage(imageId) {
-            //axios.get('')
-        }
     },
 
     components: {
-        'navbar': Navbar
+        'navbar': Navbar,
+        'product-tile': ProductTile
     }
 }
 </script>

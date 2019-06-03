@@ -115,5 +115,28 @@
       "name": "min:3"
     },
     "perform": "CreateCategory"
+  },
+  {
+    "path": "/products/bind/category",
+    "method": "POST",
+    "required": {
+      "product_id": "uuid",
+      "category_id": "uuid"
+    },
+    "perform": "BindCategory"
+  },
+  {
+    "path": "/products/bind/image",
+    "method": "POST",
+    "required": {
+      "product_id": "uuid",
+      "image_id": "uuid"
+    },
+    "perform": "BindImage"
+  },
+  {
+    "path": "/images/upload",
+    "method": "POST",
+    "perform": "UploadImage"
   }
 ]

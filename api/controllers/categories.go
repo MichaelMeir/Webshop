@@ -22,6 +22,7 @@ func(c Controller) GetSpecificCategory(w http.ResponseWriter, req *http.Request)
 	data, err := json.Marshal(category)
 	if err != nil {
 		w.Write([]byte(err.Error()))
+		return
 	}
 	w.Write(data)
 }
