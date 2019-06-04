@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '@/components/Index'
 import Products from '@/components/Products'
 import Categories from '@/components/Categories'
+
+import CategoryPage from '@/components/CategoryPage'
+import ProductPage from '@/components/ProductPage'
 
 Vue.use(Router)
 
@@ -12,7 +14,7 @@ export default new Router({
     {
       path: '/',
       name: 'Index',
-      component: Index
+      component: Products
     },
     {
       path: '/products',
@@ -23,6 +25,16 @@ export default new Router({
       path: '/categories',
       name: 'Categories',
       component: Categories
+    },
+    {
+      path: '/category/:name',
+      name: 'Category',
+      component: CategoryPage
+    },
+    {
+      path: '/product/:uuid',
+      name: 'Product',
+      component: ProductPage
     }
   ]
 })

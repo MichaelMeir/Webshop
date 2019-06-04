@@ -75,7 +75,7 @@ func PrepareRule(rule string) []string {
 		args := strings.Split(split[i], ":")
 		outrule := rules[args[0]]
 		for j := 1; j < len(args); j++ {
-			outrule = strings.ReplaceAll(outrule, "%" + strconv.Itoa(i) + "%", args[i])
+			outrule = strings.ReplaceAll(outrule, "%" + strconv.Itoa(j) + "%", args[j])
 		}
 		out = append(out, outrule)
 	}

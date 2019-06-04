@@ -14,11 +14,11 @@ import Navbar from '@/components/objects/Navbar'
 import ProductTile from '@/components/objects/ProductTile'
 
 export default {
-    name: 'Index',
+    name: 'CategoryPage',
 
     mounted() {
-        axios.get('http://localhost/api/products/all').then(response => {
-            this.products = response.data
+        axios.get('http://localhost/api/categories/specific?name=' + this.$route.params.name).then(response => {
+            this.products = response.data.Products
         })
     },
 
