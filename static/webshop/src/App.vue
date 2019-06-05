@@ -17,7 +17,7 @@ export default {
 
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
-html {
+html, body {
   font-family: 'Roboto', sans-serif;
   padding: 0;
   margin: 0;

@@ -1,5 +1,5 @@
 <template>
-    <img :src="this.image_data">
+    <img :id="this.new_image" :src="this.image_data">
 </template>
 
 <script>
@@ -10,7 +10,9 @@ export default {
 
     data() {
         return {
-            image_data: ''
+            image_data: '',
+            image_set: false,
+            new_image: this.src
         }
     },
 
@@ -19,12 +21,24 @@ export default {
     },
 
     methods: {
+        SetImage(src) {
+            this.image_set = true
+            this.new_image = src
+            this.LoadImage()
+        },
+
         LoadImage() {
             if(!this.load) {
                 requestIdleCallback(this.LoadImage)
                 return
             }
-            axios.get('http://localhost/api/products/image?id=' + this.src).then(response => {
+            let url = 'http://localhost/api/products/image?id='
+            if(this.image_set) {
+                url += this.new_image
+            }else{
+                url += this.src
+            }
+            axios.get(url).then(response => {
                 this.image_data = response.data
             })
         }

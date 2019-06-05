@@ -1,5 +1,5 @@
 <template>
-    <div @click="openCategory" class="rounded bg-black text-white cursor-pointer p-4">
+    <div @click="openCategory" class="bg-black text-white cursor-pointer p-4">
         {{ this.category.Name }}
     </div>
 </template>
