@@ -38,8 +38,7 @@
     "method": "POST",
     "required": {
       "username": "min:5|user_input",
-      "password": "min:5|user_input",
-      "captcha": "min:5"
+      "password": "min:5|user_input"
     },
     "perform": "AuthLogin"
   },
@@ -49,17 +48,13 @@
     "required": {
       "username": "min:5|user_input",
       "password": "min:5|user_input",
-      "email": "email",
-      "captcha": "min:5"
+      "email": "email"
     },
     "perform": "AuthRegister"
   },
   {
     "path": "/auth/logout",
-    "method": "POST",
-    "required": {
-      "id": "uuid"
-    },
+    "method": "GET",
     "perform": "AuthLogout"
   },
   {

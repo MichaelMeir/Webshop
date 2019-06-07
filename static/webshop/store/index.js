@@ -5,8 +5,6 @@ import Cart from './modules/cart'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
-    modules: {
-        Cart
-    }
-})
+const store = new Vuex.Store(Cart)
+
+export default store
