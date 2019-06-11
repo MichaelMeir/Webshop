@@ -6,6 +6,8 @@ import Categories from '@/components/Categories'
 import CategoryPage from '@/components/CategoryPage'
 import ProductPage from '@/components/ProductPage'
 
+import Auth from '@/components/Auth'
+
 Vue.use(Router)
 
 export default new Router({
@@ -35,6 +37,11 @@ export default new Router({
       path: '/product/:uuid',
       name: 'Product',
       component: ProductPage
+    },
+    {
+      path: '/auth',
+      name: 'Authentication',
+      component: Auth
     }
   ]
 })

@@ -16,7 +16,9 @@
             <h2 class="p-2 bg-black text-white">{{product.Name}}</h2>
           </div>
           <div>{{product.Description}}</div>
-          <div @click="AddProduct">Add</div>
+          <div class="flex flex-1">
+            <div class="cursor-pointer bg-black text-white p-2 mt-5" @click="AddProduct">Order for &euro; {{ product.Price.toFixed(2) }}</div>
+          </div>
         </div>
     </div>
   </div>
@@ -35,7 +37,8 @@ export default {
   data() {
     return {
       product: {
-          Images: []
+        Price: 0,
+        Images: []
       },
       loaded: false
     }
