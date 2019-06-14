@@ -8,6 +8,9 @@ import ProductPage from '@/components/ProductPage'
 
 import Auth from '@/components/Auth'
 
+import AccountPanel from '@/components/AccountPanel'
+import AdminPanel from '@/components/AdminPanel'
+
 Vue.use(Router)
 
 export default new Router({
@@ -42,6 +45,16 @@ export default new Router({
       path: '/auth',
       name: 'Authentication',
       component: Auth
+    },
+    {
+      path: '/account',
+      name: 'AccountPanel',
+      component: AccountPanel
+    },
+    {
+      path: '/admin',
+      name: 'AdminPanel',
+      component: AdminPanel
     }
   ]
 })

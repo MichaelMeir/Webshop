@@ -4,8 +4,34 @@
         <a href="/products"><li>PRODUCTS</li></a>
         <a href="/categories"><li>CATEGORIES</li></a>
       </ul>
+      <div>
+        <div :class="this.switch(true)">
+          <a href="/auth">Login or Register</a>
+        </div>
+        <div :class="this.switch(false)">
+          <a href="/account">Account</a>
+        </div>
+      </div>
     </div>
 </template>
+
+<script>
+export default {
+
+  data() {
+    return {
+      logged_in: document.cookie.match(/^(.*;)?\s*ses_id\s*=\s*[^;]+(.*)?$/) == null
+    }
+  },
+
+  methods: {
+    switch(insert) {
+      return insert == this.logged_in ? "" : "hidden"
+    }
+  }
+}
+</script>
+
 
 <<style>
 a {

@@ -96,7 +96,7 @@ export default {
        },
 
        Register() {
-           axios.post('https://localhost/api/auth/register', {
+           axios.post('http://localhost/api/auth/register', {
                username: this.register_username,
                password: this.register_password,
                email: this.register_email
@@ -106,6 +106,8 @@ export default {
                }else{
                    this.err = "Could not register!"
                }
+           }).catch(err => {
+               this.err = "Could not register! " + err
            })
        }
    },

@@ -2,19 +2,16 @@
   <div class="w-full h-full">
     <cart/>
     <navbar/>
-    <div v-for="(category, index) in categories" :key="index" class="category mt-2">
-      <category :category="category"></category>
-    </div>
+    
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/objects/Navbar'
-import CategoryTile from '@/components/objects/CategoryTile'
 import Cart from '@/components/objects/Cart'
 
 export default {
-  name: 'Index',
+  name: 'AccountPanel',
 
   data() {
     return {
@@ -24,15 +21,8 @@ export default {
 
   components: {
     'navbar': Navbar,
-    'category': CategoryTile,
     'cart': Cart
   },
-
-  mounted() {
-    axios.get('http://localhost/api/categories/all').then(response => {
-      this.categories = response.data
-    })
-  }
 }
 </script>
 

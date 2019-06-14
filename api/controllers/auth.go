@@ -38,7 +38,7 @@ func(c Controller) AuthRegister(w http.ResponseWriter, req *http.Request) {
 		Session_id: ses_id,
 	}
 	c.DB.Data.Save(user)
-	req.AddCookie(&http.Cookie{Name: "ses_id", Value: ses_id})
+	http.SetCookie(w, &http.Cookie{Name: "ses_id", Value: ses_id})
 	w.Write([]byte("{\"success\": true}"))
 }
 
@@ -53,8 +53,9 @@ func(c Controller) AuthLogin(w http.ResponseWriter, req *http.Request) {
 			var ses_id = uuid.V4().String()
 			user.Session_id = ses_id
 			c.DB.Data.Save(user)
-			req.AddCookie(&http.Cookie{Name: "ses_id", Value: ses_id})
+			http.SetCookie(w, &http.Cookie{Name: "ses_id", Value: ses_id})
 			w.Write([]byte("{\"success\": true}"))
+			return
 		}
 	}
 	err:
@@ -72,7 +73,7 @@ func(c Controller) AuthLogout(w http.ResponseWriter, req *http.Request) {
 		}else{
 			user.Session_id = ""
 			user.Session_ip = ""
-			req.AddCookie(&http.Cookie{Name: "ses_id", Value: ""})
+			http.SetCookie(w, &http.Cookie{Name: "ses_id", Value: ""})
 			c.DB.Data.Save(user)
 			w.Write([]byte("{\"success\": true}"))
 		}

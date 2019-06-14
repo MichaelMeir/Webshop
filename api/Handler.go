@@ -1,7 +1,10 @@
 package api
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"net/http"
+	"net/url"
 	"regexp"
 	"strconv"
 	"strings"
@@ -32,6 +35,13 @@ func Handle(w http.ResponseWriter, req *http.Request) {
 		}
 		return
 	}
+	query := req.URL.Query()
+	err := AddBodyQuery(&query, req)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(strconv.Itoa(http.StatusNotFound) + " error while reading body: " + err.Error()))
+		return
+	}
 	if strings.ToLower(req.Method) == strings.ToLower(call.Method) {
 		for key, rule := range call.Required {
 			if val, ok := req.URL.Query()[key]; ok {
@@ -55,6 +65,28 @@ func Handle(w http.ResponseWriter, req *http.Request) {
 		}
 		return
 	}
+}
+
+func AddBodyQuery(query *url.Values, req *http.Request) error {
+	data, err := ioutil.ReadAll(req.Body)
+	if len(data) == 0 {
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	body := map[string]interface{}{}
+	err = json.Unmarshal(data, &body)
+	if err != nil {
+		return err
+	}
+	for key, value := range body {
+		if val, ok := value.(string); ok {
+			query.Set(key, val)
+		}
+	}
+	req.URL.RawQuery = query.Encode()
+	return nil
 }
 
 func FollowsRule(value string, rule string) bool {

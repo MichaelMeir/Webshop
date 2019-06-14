@@ -1,7 +1,7 @@
 <template>
     <div :class="'absolute right-0 top-0' + (open ? ' w-1/4' : '')">
         <div @click="Toggle()" class="cursor-pointer bg-black text-white p-4" v-html="(open) ? '>' : '<'"></div>
-        <div :class="'w-full h-screen bg-black text-white p-4 pr-10 ' + (open ? '' : 'hidden')">
+        <div :class="'w-full h-full bg-black text-white p-4 pr-10 ' + (open ? '' : 'hidden')">
             <div>
                 <div v-for="(product, index) in products" :key="index" class="flex flex-1 w-full">
                     <div class="w-3/5 cursor-pointer" @click="OpenProduct(product)">{{product.Name}}</div><div class="w-1/4">&euro; {{product.Price.toFixed(2)}}</div><div class="cursor-pointer" @click="RemoveProduct(index)">-</div>
