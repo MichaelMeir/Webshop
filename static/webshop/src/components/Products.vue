@@ -19,7 +19,7 @@ export default {
     name: 'Index',
 
     mounted() {
-        axios.get('http://localhost/api/products/all').then(response => {
+        axios.get('/api/products/all').then(response => {
             this.products = response.data
         })
     },

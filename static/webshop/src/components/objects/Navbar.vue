@@ -3,15 +3,15 @@
       <ul class="flex flex-1 list-none m-0 pt-4 pb-4">
         <a href="/products"><li>PRODUCTS</li></a>
         <a href="/categories"><li>CATEGORIES</li></a>
+        <li>
+          <div :class="this.switch(true)">
+            <a href="/auth">Login or Register</a>
+          </div>
+          <div :class="this.switch(false)">
+            <a href="/account">Account</a>
+          </div>
+        </li>
       </ul>
-      <div>
-        <div :class="this.switch(true)">
-          <a href="/auth">Login or Register</a>
-        </div>
-        <div :class="this.switch(false)">
-          <a href="/account">Account</a>
-        </div>
-      </div>
     </div>
 </template>
 

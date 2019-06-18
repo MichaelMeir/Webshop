@@ -51,7 +51,7 @@ export default {
   },
 
   beforeCreate() {
-    axios.get('http://localhost/api/products/specific?id=' + this.$route.params.uuid).then(response => {
+    axios.get('/api/products/specific?id=' + this.$route.params.uuid).then(response => {
       response.data.Images = JSON.parse(response.data.Images)
       this.product = response.data
       console.log(this.product)

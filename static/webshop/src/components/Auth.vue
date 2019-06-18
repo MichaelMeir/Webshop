@@ -83,7 +83,7 @@ export default {
 
    methods: {
        Login() {
-           axios.post('http://localhost/api/auth/login', {
+           axios.post('/api/auth/login', {
                username: this.login_username,
                password: this.login_password
            }).then(response => {
@@ -96,7 +96,7 @@ export default {
        },
 
        Register() {
-           axios.post('http://localhost/api/auth/register', {
+           axios.post('/api/auth/register', {
                username: this.register_username,
                password: this.register_password,
                email: this.register_email

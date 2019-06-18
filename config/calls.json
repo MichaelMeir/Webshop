@@ -58,6 +58,24 @@
     "perform": "AuthLogout"
   },
   {
+    "path": "/auth/info",
+    "method": "GET",
+    "perform": "GetUserInfo"
+  },
+  {
+    "path": "/auth/update",
+    "method": "POST",
+    "required": {
+      "password": "user_input/empty:5",
+      "email": "email",
+      "address": "min:3",
+      "zip_code": "min:6|max:7",
+      "province": "min:3",
+      "country": "min:3"
+    },
+    "perform": "UpdateUserInfo"
+  },
+  {
     "path": "/products/delete",
     "method": "POST",
     "required": {

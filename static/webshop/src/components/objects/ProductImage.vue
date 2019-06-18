@@ -32,7 +32,7 @@ export default {
                 requestIdleCallback(this.LoadImage)
                 return
             }
-            let url = 'http://localhost/api/products/image?id='
+            let url = '/api/products/image?id='
             if(this.image_set) {
                 url += this.new_image
             }else{

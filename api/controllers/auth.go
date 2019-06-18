@@ -1,10 +1,12 @@
 package controllers
 
 import (
+	"encoding/json"
 	"github.com/blend/go-sdk/uuid"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"strconv"
+	"time"
 	"webshop/api/models"
 )
 
@@ -22,6 +24,13 @@ func(c Controller) GetUser(w http.ResponseWriter, req *http.Request) *models.Use
 }
 
 func(c Controller) AuthRegister(w http.ResponseWriter, req *http.Request) {
+	var check = models.User{}
+	c.DB.Data.First(&check, "username = ?", req.URL.Query()["username"][0])
+	if check.Password != "" {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(strconv.Itoa(http.StatusInternalServerError) + " User already exists!"))
+		return
+	}
 	pass, err := bcrypt.GenerateFromPassword([]byte(req.URL.Query()["password"][0]), bcrypt.DefaultCost)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -38,7 +47,7 @@ func(c Controller) AuthRegister(w http.ResponseWriter, req *http.Request) {
 		Session_id: ses_id,
 	}
 	c.DB.Data.Save(user)
-	http.SetCookie(w, &http.Cookie{Name: "ses_id", Value: ses_id})
+	http.SetCookie(w, &http.Cookie{Name: "ses_id", Value: ses_id, Expires: time.Now().Add(time.Hour*24), Path: "/"})
 	w.Write([]byte("{\"success\": true}"))
 }
 
@@ -53,7 +62,7 @@ func(c Controller) AuthLogin(w http.ResponseWriter, req *http.Request) {
 			var ses_id = uuid.V4().String()
 			user.Session_id = ses_id
 			c.DB.Data.Save(user)
-			http.SetCookie(w, &http.Cookie{Name: "ses_id", Value: ses_id})
+			http.SetCookie(w, &http.Cookie{Name: "ses_id", Value: ses_id, Expires: time.Now().Add(time.Hour*24), Path: "/"})
 			w.Write([]byte("{\"success\": true}"))
 			return
 		}
@@ -80,5 +89,37 @@ func(c Controller) AuthLogout(w http.ResponseWriter, req *http.Request) {
 	}else{
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(strconv.Itoa(http.StatusInternalServerError) + " Could not find session cookie: " + err.Error()))
+	}
+}
+
+func(c Controller) GetUserInfo(w http.ResponseWriter, req *http.Request) {
+	if user := c.GetUser(w, req); user != nil {
+		type UserInfo struct {
+			Name string
+			Email string
+			Address string
+			Zip_code string
+			Province string
+			Country string
+		}
+		data, err := json.Marshal(UserInfo{user.Username, user.Email, user.Address, user.ZipCode, user.Province, user.Country})
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(strconv.Itoa(http.StatusInternalServerError) + " Could not convert user data to json " + err.Error()))
+		}
+		w.Write(data)
+	}else{
+		w.WriteHeader(http.StatusForbidden)
+		w.Write([]byte(strconv.Itoa(http.StatusForbidden) + " Not logged in."))
+	}
+}
+
+func(c Controller) UpdateUserInfo(w http.ResponseWriter, req *http.Request) {
+	if user := c.GetUser(w, req); user != nil {
+
+		w.Write([]byte("{\"success\":true}"))
+	}else{
+		w.WriteHeader(http.StatusForbidden)
+		w.Write([]byte(strconv.Itoa(http.StatusForbidden) + " Not logged in."))
 	}
 }

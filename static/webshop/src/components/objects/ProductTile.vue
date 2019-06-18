@@ -25,7 +25,7 @@ export default {
     },
 
     mounted() {
-        axios.get('http://localhost/api/products/image?id=' + this.image_id).then(response => {
+        axios.get('/api/products/image?id=' + this.image_id).then(response => {
             this.image_data = response.data
         })
     },

@@ -29,7 +29,7 @@ export default {
   },
 
   mounted() {
-    axios.get('http://localhost/api/categories/all').then(response => {
+    axios.get('/api/categories/all').then(response => {
       this.categories = response.data
     })
   }

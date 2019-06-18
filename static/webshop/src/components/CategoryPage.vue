@@ -19,7 +19,7 @@ export default {
     name: 'CategoryPage',
 
     mounted() {
-        axios.get('http://localhost/api/categories/specific?name=' + this.$route.params.name).then(response => {
+        axios.get('/api/categories/specific?name=' + this.$route.params.name).then(response => {
             this.products = response.data.Products
         })
     },
