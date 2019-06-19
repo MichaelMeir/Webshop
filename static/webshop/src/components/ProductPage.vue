@@ -15,6 +15,11 @@
           <div class="flex flex-1">
             <h2 class="p-2 bg-black text-white">{{product.Name}}</h2>
           </div>
+          <div class="flex flex-1 mt-2 mb-4">
+            <div class="cursor-pointer bg-black text-white p-2 mr-2" @click="$router.push('/category/' + category.Name)" v-for="(category, index) in this.product.Categories" :key="index">
+              {{category.Name}}
+            </div>
+          </div>
           <div>{{product.Description}}</div>
           <div class="flex flex-1">
             <div class="cursor-pointer bg-black text-white p-2 mt-5" @click="AddProduct">Order for &euro; {{ product.Price.toFixed(2) }}</div>

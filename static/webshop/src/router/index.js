@@ -11,6 +11,8 @@ import Auth from '@/components/Auth'
 import AccountPanel from '@/components/AccountPanel'
 import AdminPanel from '@/components/AdminPanel'
 
+import ProcessOrder from '@/components/ProcessOrder'
+
 Vue.use(Router)
 
 export default new Router({
@@ -55,6 +57,11 @@ export default new Router({
       path: '/admin',
       name: 'AdminPanel',
       component: AdminPanel
+    },
+    {
+      path: '/processOrder',
+      name: 'ProcessOrder',
+      component: ProcessOrder
     }
   ]
 })

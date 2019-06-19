@@ -7,8 +7,8 @@
           <div :class="this.switch(true)">
             <a href="/auth">Login or Register</a>
           </div>
-          <div :class="this.switch(false)">
-            <a href="/account">Account</a>
+          <div :class="'flex-1 flex ' + this.switch(false)">
+            <a href="/account" class="mr-2">Account</a>
             <div @click="logout()" class="cursor-pointer">
               logout
             </div>
@@ -23,11 +23,17 @@ export default {
 
   data() {
     return {
-      logged_in: document.cookie.match(/^(.*;)?\s*ses_id\s*=\s*[^;]+(.*)?$/) == null
+      logged_in: (this.getCookie('ses_id') == null || this.getCookie('ses_id').length == 0)
     }
   },
 
   methods: {
+    getCookie(name) {
+      var value = "; " + document.cookie;
+      var parts = value.split("; " + name + "=");
+      if (parts.length == 2) return parts.pop().split(";").shift();
+    },
+
     switch(insert) {
       return insert == this.logged_in ? "" : "hidden"
     },
@@ -35,6 +41,7 @@ export default {
     logout() {
       axios.get('/api/auth/logout').then(response => {
         this.$router.push('/')
+        this.logged_in = (this.getCookie('ses_id') == null || this.getCookie('ses_id').length == 0)
       })
     }
   }

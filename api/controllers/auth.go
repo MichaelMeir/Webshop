@@ -81,7 +81,7 @@ func(c Controller) AuthLogout(w http.ResponseWriter, req *http.Request) {
 	if user := c.GetUser(w, req); user != nil {
 		user.Session_id = ""
 		user.Session_ip = ""
-		http.SetCookie(w, &http.Cookie{Name: "ses_id", Value: ""})
+		http.SetCookie(w, &http.Cookie{Name: "ses_id", Value: "", Expires: time.Now().Add(time.Hour*24), Path: "/"})
 		c.DB.Data.Save(user)
 		w.Write([]byte("{\"success\": true}"))
 	}else{

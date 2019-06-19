@@ -16,7 +16,7 @@
                         <p class="m-0 p-3">country:</p>
                     </div>
                     <div class="w-1/2">
-                        <input class="p-2 h-4 mt-2 w-4/5 border-0 bg-white outline-none border-b border-solid border-black" type="text" v-model="user_info.Name"><br>
+                        <input disabled class="p-2 h-4 mt-2 w-4/5 border-0 bg-white outline-none border-b border-solid border-black" type="text" v-model="user_info.Name"><br>
                         <input @change="updateInfo" class="p-2 h-4 mt-2 w-4/5 border-0 bg-white outline-none border-b border-solid border-black" type="text" v-model="user_info.Email"><br>
                         <input @change="updateInfo" class="p-2 h-4 mt-2 w-4/5 border-0 bg-white outline-none border-b border-solid border-black" type="text" v-model="user_info.Address"><br>
                         <input @change="updateInfo" class="p-2 h-4 mt-2 w-4/5 border-0 bg-white outline-none border-b border-solid border-black" type="text" v-model="user_info.Zip_code"><br>
