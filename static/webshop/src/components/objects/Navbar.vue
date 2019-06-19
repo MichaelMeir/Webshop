@@ -9,6 +9,9 @@
           </div>
           <div :class="this.switch(false)">
             <a href="/account">Account</a>
+            <div @click="logout()" class="cursor-pointer">
+              logout
+            </div>
           </div>
         </li>
       </ul>
@@ -27,6 +30,12 @@ export default {
   methods: {
     switch(insert) {
       return insert == this.logged_in ? "" : "hidden"
+    },
+
+    logout() {
+      axios.get('/api/auth/logout').then(response => {
+        this.$router.push('/')
+      })
     }
   }
 }

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/blend/go-sdk/uuid"
 	"golang.org/x/crypto/bcrypt"
+	"net"
 	"net/http"
 	"strconv"
 	"time"
@@ -16,7 +17,8 @@ func(c Controller) GetUser(w http.ResponseWriter, req *http.Request) *models.Use
 		return nil
 	}
 	var user = models.User{}
-	c.DB.Data.First(&user, "session_id = ?, session_ip = ?", session_id, req.RemoteAddr)
+	host, _, _ := net.SplitHostPort(req.RemoteAddr)
+	c.DB.Data.First(&user, "session_id = ? AND session_ip = ?", session_id.Value, host)
 	if user.Username != "" {
 		return &user
 	}
@@ -39,11 +41,13 @@ func(c Controller) AuthRegister(w http.ResponseWriter, req *http.Request) {
 
 	var ses_id = uuid.V4().String()
 
+	host, _, _ := net.SplitHostPort(req.RemoteAddr)
+
 	var user = &models.User{
 		Username: req.URL.Query()["username"][0],
 		Password: string(pass),
 		Email: req.URL.Query()["email"][0],
-		Session_ip: req.RemoteAddr,
+		Session_ip: host,
 		Session_id: ses_id,
 	}
 	c.DB.Data.Save(user)
@@ -58,7 +62,8 @@ func(c Controller) AuthLogin(w http.ResponseWriter, req *http.Request) {
 		if bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.URL.Query()["password"][0])) != nil {
 			goto err
 		}else{
-			user.Session_ip = req.RemoteAddr
+			host, _, _ := net.SplitHostPort(req.RemoteAddr)
+			user.Session_ip = host
 			var ses_id = uuid.V4().String()
 			user.Session_id = ses_id
 			c.DB.Data.Save(user)
@@ -73,22 +78,15 @@ func(c Controller) AuthLogin(w http.ResponseWriter, req *http.Request) {
 }
 
 func(c Controller) AuthLogout(w http.ResponseWriter, req *http.Request) {
-	if cookie, err := req.Cookie("ses_id"); err == nil {
-		var user = models.User{}
-		c.DB.Data.First(&user, "ses_id = ?, ses_ip = ?", cookie.Value, req.RemoteAddr)
-		if user.Username == "" {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(strconv.Itoa(http.StatusInternalServerError) + " Could not find user linked to session"))
-		}else{
-			user.Session_id = ""
-			user.Session_ip = ""
-			http.SetCookie(w, &http.Cookie{Name: "ses_id", Value: ""})
-			c.DB.Data.Save(user)
-			w.Write([]byte("{\"success\": true}"))
-		}
+	if user := c.GetUser(w, req); user != nil {
+		user.Session_id = ""
+		user.Session_ip = ""
+		http.SetCookie(w, &http.Cookie{Name: "ses_id", Value: ""})
+		c.DB.Data.Save(user)
+		w.Write([]byte("{\"success\": true}"))
 	}else{
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(strconv.Itoa(http.StatusInternalServerError) + " Could not find session cookie: " + err.Error()))
+		w.Write([]byte(strconv.Itoa(http.StatusInternalServerError) + " Could not find session cookie."))
 	}
 }
 
@@ -116,7 +114,12 @@ func(c Controller) GetUserInfo(w http.ResponseWriter, req *http.Request) {
 
 func(c Controller) UpdateUserInfo(w http.ResponseWriter, req *http.Request) {
 	if user := c.GetUser(w, req); user != nil {
-
+		user.Email = req.URL.Query()["Email"][0]
+		user.Address = req.URL.Query()["Address"][0]
+		user.ZipCode = req.URL.Query()["Zip_code"][0]
+		user.Province = req.URL.Query()["Province"][0]
+		user.Country = req.URL.Query()["Country"][0]
+		c.DB.Data.Save(user)
 		w.Write([]byte("{\"success\":true}"))
 	}else{
 		w.WriteHeader(http.StatusForbidden)

@@ -18,8 +18,15 @@ const mutations = {
         state.products.push(product)
     },
 
-    Remove(state, index) {
-        state.total_value -= state.products.splice(index, 1)[0].Price
+    Remove(state, uuid) {
+        for(let i = 0; i < state.products.length; i++) {
+            if(state.products[i].UUID == uuid) {
+                let out = state.products.splice(i, 1)[0]
+                console.log(out)
+                state.total_value -= out.Price
+                return
+            }
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full">
-    <cart/>
+    <cart ref="cart"/>
     <navbar/>
     <div class="flex flex-1 w-full h-full">
         <div class="w-1/2 h-full overflow-hidden flex flex-1">
@@ -66,6 +66,7 @@ export default {
 
     AddProduct() {
       Store.commit('Push', this.product)
+      this.$refs.cart.open = true;
     }
   }
 }

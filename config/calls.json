@@ -66,12 +66,11 @@
     "path": "/auth/update",
     "method": "POST",
     "required": {
-      "password": "user_input/empty:5",
-      "email": "email",
-      "address": "min:3",
-      "zip_code": "min:6|max:7",
-      "province": "min:3",
-      "country": "min:3"
+      "Email": "email",
+      "Address": "",
+      "Zip_code": "max:7",
+      "Province": "",
+      "Country": ""
     },
     "perform": "UpdateUserInfo"
   },
