@@ -150,5 +150,10 @@
     "path": "/images/upload",
     "method": "POST",
     "perform": "UploadImage"
+  },
+  {
+    "path": "/order",
+    "method": "POST",
+    "perform": "RegisterOrder"
   }
 ]

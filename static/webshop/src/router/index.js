@@ -12,6 +12,7 @@ import AccountPanel from '@/components/AccountPanel'
 import AdminPanel from '@/components/AdminPanel'
 
 import ProcessOrder from '@/components/ProcessOrder'
+import CompleteOrder from '@/components/CompleteOrder'
 
 Vue.use(Router)
 
@@ -62,6 +63,11 @@ export default new Router({
       path: '/processOrder',
       name: 'ProcessOrder',
       component: ProcessOrder
+    },
+    {
+      path: '/completeOrder',
+      name: 'CompleteOrder',
+      component: CompleteOrder
     }
   ]
 })

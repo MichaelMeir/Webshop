@@ -27,6 +27,11 @@ const mutations = {
                 return
             }
         }
+    },
+
+    Clear(state) {
+        state.products = []
+        state.total_value = 0
     }
 }
 

@@ -26,6 +26,6 @@ func(db *Database) Close() {
 }
 
 func(db *Database) DbInit() {
-	db.Data.AutoMigrate(Product{}, Category{}, Image{}, User{})
+	db.Data.AutoMigrate(Product{}, Category{}, Image{}, User{}, Order{})
 	db.Data.Model(&Product{}).Related(&[]Category{}, "Categories")
 }
